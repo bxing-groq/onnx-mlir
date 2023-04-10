@@ -582,7 +582,6 @@ void ONNXAddOp::getCanonicalizationPatterns(
 void ONNXCastOp::getCanonicalizationPatterns(
     RewritePatternSet &result, MLIRContext *context) {
   result.insert<CastEliminationPattern>(context);
-  result.insert<FuseCastCastPattern>(context);
 }
 
 /// on the ONNXConstantOp.

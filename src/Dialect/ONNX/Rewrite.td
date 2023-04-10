@@ -81,7 +81,7 @@ def AttributeIsNotNull :
   Constraint<CPred<" ($_self) ">, "Attribute is null">;
 
 def IsDenseElementsAttr :
-  Constraint<And<[CPred<" ($_self) ">, 
+  Constraint<And<[CPred<" ($_self) ">,
                   CPred<" ($_self).isa<DenseElementsAttr>()">
                  ]>, "Attribute is not a DenseElementsAttr">;
 
@@ -354,16 +354,16 @@ def FuseMulConvNullBiasPattern: Pat<
      $b, $auto_pad, $dilation, $group, $kernel_shape, $pads, $strides),
   [(HasNoneType $b),
    (IsDenseElementsAttr:$denseAttr),
-   (IsFromONNXConstantOpWithDenseElementsAttr:$w),    
-   (HaveSameElementType $w, $y),       // multiplier and Conv weight must have the same element type.      
-   (HasRankGT<1> $w),                  // rank of $w must be at least 2.  
+   (IsFromONNXConstantOpWithDenseElementsAttr:$w),
+   (HaveSameElementType $w, $y),       // multiplier and Conv weight must have the same element type.
+   (HasRankGT<1> $w),                  // rank of $w must be at least 2.
    (RankXMinusRankYIs<1> $w, $y),      // rank($y) must be equal to rank($w)-1.
    (HaveSameDim<0> $w, $y),            // the first dimension of $w and $y must be equal.
    (AllDimsFromAxisToEndAre<1, 1>:$y)] // all dimensions of $y must be 1 except for the first one.
 >;
 
 // TODO add pattern for non-null bias with contraints:
-// - bias must be have rank equal to 1 and 
+// - bias must be have rank equal to 1 and
 // - bias element data type must be the same as mul constant
 // - bias dimension (0) must be equal to mul constant dim(0)
 // codegen is different too (look it up in onnx-runtime)
@@ -378,8 +378,8 @@ def IdentityEliminationPattern : Pat<(ONNXIdentityOp $arg),
 
 // y, mask = onnx.Dropout(x) -> y, mask = x, none
 def DropoutEliminationPattern : Pattern<(ONNXDropoutOp $arg, $arg1, $arg2, $ratio),
-  [(replaceWithValue $arg), (ONNXConstantOp (GetNullAttr), (GetUnitAttr), 
-   (GetNullAttr), (GetNullAttr), (GetNullAttr), (GetNullAttr), (GetNullAttr), 
+  [(replaceWithValue $arg), (ONNXConstantOp (GetNullAttr), (GetUnitAttr),
+   (GetNullAttr), (GetNullAttr), (GetNullAttr), (GetNullAttr), (GetNullAttr),
    (GetNullAttr))]>;
 
 //===----------------------------------------------------------------------===//
@@ -391,11 +391,6 @@ def CastEliminationPattern : Pat<
 	(ONNXCastOp $arg, $type),
 	(replaceWithValue $arg),
   [(HasSameElementType $arg, $type)]>;
-
-// onnx.Cast (onnx.Cast (%X, $type1)), $type2 = onnx.Cast (%X, $typ2)
-def FuseCastCastPattern : Pat<
-	(ONNXCastOp (ONNXCastOp $arg, $_), $type),
-	(ONNXCastOp $arg, $type)>;
 
 //===----------------------------------------------------------------------===//
 // Canonicalization for ONNXLayoutTransformOp
@@ -572,7 +567,7 @@ def SwapReshapeMatMulPattern: Pattern<
  // TODO: Support dynamic dimensions.
  (ONNXMatMulOp:$res2 (ONNXReshapeOp:$res1 $A, $_, $az), $B),
  [(ONNXReshapeOp (ONNXMatMulOp $A, $B, (returnType (GetReturnTypeForMatMulOpND2D $A, $B))),
-                 (ONNXConstantOpFromDenseAttr 
+                 (ONNXConstantOpFromDenseAttr
                     (createDenseElementsAttrFromShape $res2)
                  ), $az)],
  [(HasRankGT<2> $A), (HasRankOf<2> $res1), (HasRankOf<2> $B), // A is reshaped to 2D.
