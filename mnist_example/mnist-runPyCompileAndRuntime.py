@@ -1,13 +1,20 @@
-import numpy as np
-from PyRuntime import ExecutionSession
+#!/usr/bin/env python3
 
-# Load the model mnist.so compiled with onnx-mlir.
-model = './mnist.so'
-session = ExecutionSession(model)
+import numpy as np
+from PyCompileAndRuntime import OMCompileExecutionSession
+
+# Load onnx model and create CompileExecutionSession object.
+inputFileName = './mnist.onnx'
+# Set the full name of compiled model
+sharedLibPath = './mnist.so'
+# Set the compile option as "-O3"
+session = OMCompileExecutionSession(inputFileName,sharedLibPath,"-O3")
+
 # Print the models input/output signature, for display.
 # Signature functions for info only, commented out if they cause problems.
 print("input signature in json", session.input_signature())
 print("output signature in json",session.output_signature())
+
 # Create an input arbitrarily filled of 1.0 values.
 input = np.array([-0.4242129623889923, -0.4242129623889923,
     -0.4242129623889923, -0.4242129623889923, -0.4242129623889923,
@@ -271,8 +278,9 @@ input = np.array([-0.4242129623889923, -0.4242129623889923,
     -0.4242129623889923, -0.4242129623889923, -0.4242129623889923,
     -0.4242129623889923, -0.4242129623889923, -0.4242129623889923,
     -0.4242129623889923, -0.4242129623889923], np.dtype(np.float32)).reshape(1,1,28,28)
-    # Run the model.
-outputs = session.run([input])
+
+# Run the model.
+outputs = session.run(input)
 # Analyze the output (first array in the list, of signature 1x10xf32).
 prediction = outputs[0]
 digit = -1

@@ -2,10 +2,10 @@ var searchData=
 [
   ['omtensorlist_0',['OMTensorList',['../_o_m_tensor_list_8h.html#a87970f36c1838a5c43f43ec7dd0aec3a',1,'OMTensorList.h']]],
   ['omtensorlist_2eh_1',['OMTensorList.h',['../_o_m_tensor_list_8h.html',1,'']]],
-  ['omtensorlistcreate_2',['omTensorListCreate',['../_o_m_tensor_list_8h.html#aeb401809f170c07573c0db0e5b6325db',1,'OMTensorList.h']]],
-  ['omtensorlistcreatewithownership_3',['omTensorListCreateWithOwnership',['../_o_m_tensor_list_8h.html#adccaab66621b05547ddfbff0db57e7c4',1,'OMTensorList.h']]],
-  ['omtensorlistdestroy_4',['omTensorListDestroy',['../_o_m_tensor_list_8h.html#a4cd7c20b955da9999f33f64e016f24fb',1,'OMTensorList.h']]],
-  ['omtensorlistgetomtarray_5',['omTensorListGetOmtArray',['../_o_m_tensor_list_8h.html#acaf1d0aed6751928d641555a8d4293fd',1,'OMTensorList.h']]],
-  ['omtensorlistgetomtbyindex_6',['omTensorListGetOmtByIndex',['../_o_m_tensor_list_8h.html#a4fac8f933079e72a9ccd33313309bade',1,'OMTensorList.h']]],
-  ['omtensorlistgetsize_7',['omTensorListGetSize',['../_o_m_tensor_list_8h.html#a8adbed937f6d265799f1fa608699eaf2',1,'OMTensorList.h']]]
+  ['omtensorlistcreate_2',['omTensorListCreate',['../_o_m_tensor_list_8h.html#aaa64f4eb669ba3d3fa6d8c6d3b947566',1,'OMTensorList.h']]],
+  ['omtensorlistdestroy_3',['omTensorListDestroy',['../_o_m_tensor_list_8h.html#a365180f0b342a2297c2ebe9b8d8f65c5',1,'OMTensorList.h']]],
+  ['omtensorlistdestroyshallow_4',['omTensorListDestroyShallow',['../_o_m_tensor_list_8h.html#af373888f6dc2295088d1727205f8b6a2',1,'OMTensorList.h']]],
+  ['omtensorlistgetomtarray_5',['omTensorListGetOmtArray',['../_o_m_tensor_list_8h.html#aa869c88a53779ba735882b0cdbd39f7f',1,'OMTensorList.h']]],
+  ['omtensorlistgetomtbyindex_6',['omTensorListGetOmtByIndex',['../_o_m_tensor_list_8h.html#a41c8aaf4acc48a40afe0dffff00bf9c9',1,'OMTensorList.h']]],
+  ['omtensorlistgetsize_7',['omTensorListGetSize',['../_o_m_tensor_list_8h.html#ad42b148f32afd2f7bd4d779722d7a16b',1,'OMTensorList.h']]]
 ];

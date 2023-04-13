@@ -14,7 +14,10 @@ These images are created as a result of a successful merge build on the trunk.
 This means that the latest image represents the tip of the trunk.
 Currently there are both Release and Debug mode images for `amd64`, `ppc64le` and `s390x` saved in Docker Hub as, respectively, [onnxmlirczar/onnx-mlir](https://hub.docker.com/r/onnxmlirczar/onnx-mlir) and [onnxmlirczar/onnx-mlir-dev](https://hub.docker.com/r/onnxmlirczar/onnx-mlir-dev).
 To use one of these images either pull it directly from Docker Hub, launch a container and run an interactive bash shell in it, or use it as the base image in a Dockerfile.
-The onnx-mlir image just contains the built compiler and you can use it immediately to compile your model without any installation. 
+
+Here are the differences between the two Docker images.
+* The `onnx-mlir` image just contains the built compiler and you can use it immediately to compile your model without any installation. It does not include any support to run compiled model.
+* The `onnx-mlir-dev` image contains the built compiler plus all of the tools and support needed for development, including support to run our tests locally. The image also support tools to run compiled models, such as support for our python interface.
 
 ## Easy Script to Compile a Model
 
@@ -101,7 +104,6 @@ RUN git fetch --unshallow
 # 6) Set the PATH environment vars for make/debug mode. Replace Debug
 #    with Release in the PATH below when using Release mode.
 WORKDIR /workdir
-ENV MLIR_DIR=/workdir/llvm-project/build/lib/cmake/mlir
 ENV NPROC=4
 ENV PATH=$PATH:/workdir/onnx-mlir/build/Debug/bin/:/workdir/onnx-mlir/build/Debug/lib:/workdir/llvm-project/build/bin
 ```
@@ -154,3 +156,16 @@ git push --set-upstream origin main
 
 A Docker container can be used to investigate a bug, or to develop a new feature. Some like to create a new images for each new version of ONNX-MLIR; others prefer to create one image and use git to update the main branch and use git to switch between multiple branches. Both are valid approaches.
 
+## Using a devcontainer
+Another way of building onnx-mlir for development in VSCode is using a devcontainer. This way you only mount your source folder, meaning that changes you do are saved on your local machine. For this setup to work you need a `Dockerfile` and a `devcontainer.json` file. Both are provided in `docs/devcontainer-example`. 
+
+The [`Dockerfile`](devcontainer-example/Dockerfile.llvm-project) is a simple Dockerfile based on the precompiled LLVM/MLIR image that is shared. It installs additional software that is useful for developing and also sets `LLVM_PROJECT_ROOT` to easily refer to the LLVM path.
+
+
+The [`devcontainer.json`](devcontainer-example/devcontainer.json) preinstalls extensions and defines settings for the VS Code server running inside the container. This way you don't have to setup VS Code everytime you enter the container. In `postAttachCommand` ONNX is installed.
+
+To use this setup you first clone onnx-mlir and all submodules (for example with` git clone --recursive https://github.com/onnx/onnx-mlir.git`). You then create a new folder named `.devcontainer` in the source root. After that you copy the two files in `docs/devcontainer-example` into that folder. Now simply press `CTRL+SHIFT+P` and execute `Dev Containers: Reopen in Container`. VS Code will now create the docker image and mount the source folder.
+
+You can now configure onnx-mlir as described in [BuildOnLinuxOSX](BuildOnLinuxOSX.md). `MLIR_DIR` is already set for you, so you can skip that step.
+
+**Note:** To run this on M1/2 Macs something like Rosetta is needed. This is related to https://github.com/docker/roadmap/issues/384
